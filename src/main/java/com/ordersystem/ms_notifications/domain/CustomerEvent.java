@@ -9,17 +9,8 @@ public class CustomerEvent {
 
     private String eventType;
     private Long customerId;
-    private BigDecimal occurredAt;
-
-    public Instant getOccurredAtAsInstant() {
-
-        long seconds = occurredAt.longValue();
-        long nanos = occurredAt
-                .subtract(BigDecimal.valueOf(seconds))
-                .movePointRight(9)
-                .longValue();
-
-        return Instant.ofEpochSecond(seconds, nanos);
-    }
+    private Instant occurredAt;
+    private String name;
+    private String email;
 
 }

@@ -1,6 +1,9 @@
 spring:
   application:
     name: ms-notifications
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
   kafka:
     consumer:
       group-id: notifications-service
