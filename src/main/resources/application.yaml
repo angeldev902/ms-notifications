@@ -15,6 +15,13 @@ spring:
         spring.json.value.default.type: com.ordersystem.ms_notifications.domain.CustomerEvent
         spring.json.trusted.packages: com.ordersystem.ms_notifications.domain
         spring.json.use.type.headers: false
+  mail:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
 
 server:
   port: 8082
