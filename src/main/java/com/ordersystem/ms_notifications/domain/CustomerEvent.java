@@ -12,5 +12,6 @@ public class CustomerEvent {
     private Instant occurredAt;
     private String name;
     private String email;
+    private String phone;
 
 }

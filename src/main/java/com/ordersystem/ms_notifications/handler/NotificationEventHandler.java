@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import com.ordersystem.ms_notifications.application.*;
 
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -23,17 +24,17 @@ public class NotificationEventHandler {
 
             case "CUSTOMER_CREATED" -> {
                 log.info("Sending welcome notification for customer {}", event.getCustomerId());
-                welcomeUseCase.execute(event.getEmail(), event.getName());
+                welcomeUseCase.execute(event.getEmail(), event.getPhone(), event.getName());
             }
 
             case "CUSTOMER_UPDATED" -> {
                     log.info("Sending update notification for customer {}", event.getCustomerId());
-                    updatedUseCase.execute(event.getEmail(), event.getName());
+                    updatedUseCase.execute(event.getEmail(), event.getPhone(), event.getName());
             }
 
             case "CUSTOMER_DELETED" -> {
                     log.info("Sending delete notification for customer {}", event.getCustomerId());
-                    deletedUseCase.execute(event.getEmail(), event.getName());
+                    deletedUseCase.execute(event.getEmail(), event.getPhone(), event.getName());
             }
 
             default ->
