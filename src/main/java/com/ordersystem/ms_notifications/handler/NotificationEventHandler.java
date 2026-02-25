@@ -6,13 +6,16 @@ import com.ordersystem.ms_notifications.service.EmailNotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import com.ordersystem.ms_notifications.application.*;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class NotificationEventHandler {
 
-    private final NotificationService notificationService;
+    private final SendWelcomeNotificationUseCase welcomeUseCase;
+    private final SendCustomerUpdatedNotificationUseCase updatedUseCase;
+    private final SendCustomerDeletedNotificationUseCase deletedUseCase;
 
     public void handle(CustomerEvent event) {
 
@@ -20,31 +23,17 @@ public class NotificationEventHandler {
 
             case "CUSTOMER_CREATED" -> {
                 log.info("Sending welcome notification for customer {}", event.getCustomerId());
-                notificationService.send(
-                        event.getEmail(),
-                        "Welcome to Order System 🎉",
-                        "Hello " + event.getName() + ",\n\n" +
-                                "Your account has been successfully created.\n\n" +
-                                "Thank you for joining us."
-                );
+                welcomeUseCase.execute(event.getEmail(), event.getName());
             }
 
             case "CUSTOMER_UPDATED" -> {
                     log.info("Sending update notification for customer {}", event.getCustomerId());
-                    notificationService.send(
-                        event.getEmail(),
-                        "Updated account 🎉",
-                        "Hello " + event.getName() + ",\n\nYour account has been successfully updated."
-                    );
+                    updatedUseCase.execute(event.getEmail(), event.getName());
             }
 
             case "CUSTOMER_DELETED" -> {
                     log.info("Sending delete notification for customer {}", event.getCustomerId());
-                notificationService.send(
-                        event.getEmail(),
-                        "Deleted account 🎉",
-                        "Hello " + event.getName() + ",\n\nYour account has been successfully deleted."
-                );
+                    deletedUseCase.execute(event.getEmail(), event.getName());
             }
 
             default ->
