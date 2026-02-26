@@ -5,6 +5,7 @@ import com.ordersystem.ms_notifications.handler.NotificationEventHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,11 +19,20 @@ public class CustomerEventsConsumer {
             topics = "customers.events",
             groupId = "notifications-service"
     )
-    public void consume(CustomerEvent event) {
+    public void consume(CustomerEvent event, Acknowledgment acknowledgment) {
 
         log.info("Event received from Kafka: {}", event);
 
-        handler.handle(event);
+        try {
+            handler.handle(event);
+
+            // Confirm offset only everything went well
+            acknowledgment.acknowledge();
+
+        } catch (Exception e) {
+            log.error("Error processing event. Offset will not be committed", e);
+            throw e;
+        }
     }
 
 }

@@ -8,6 +8,7 @@ spring:
     consumer:
       group-id: notifications-service
       auto-offset-reset: earliest
+      enable-auto-commit: false
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
@@ -15,6 +16,8 @@ spring:
         spring.json.value.default.type: com.ordersystem.ms_notifications.domain.CustomerEvent
         spring.json.trusted.packages: com.ordersystem.ms_notifications.domain
         spring.json.use.type.headers: false
+    listener:
+      ack-mode: manual
   mail:
     properties:
       mail:
