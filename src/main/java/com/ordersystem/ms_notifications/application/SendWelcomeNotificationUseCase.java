@@ -2,7 +2,6 @@ package com.ordersystem.ms_notifications.application;
 
 import com.ordersystem.ms_notifications.domain.model.NotificationCommand;
 import com.ordersystem.ms_notifications.domain.model.NotificationType;
-import com.ordersystem.ms_notifications.domain.port.NotificationChannel;
 import com.ordersystem.ms_notifications.infrastructure.NotificationOrchestrator;
 import org.springframework.stereotype.Service;
 

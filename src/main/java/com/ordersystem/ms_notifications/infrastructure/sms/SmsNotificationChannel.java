@@ -2,13 +2,19 @@ package com.ordersystem.ms_notifications.infrastructure.sms;
 
 import com.ordersystem.ms_notifications.domain.model.NotificationCommand;
 import com.ordersystem.ms_notifications.domain.port.NotificationChannel;
+import com.ordersystem.ms_notifications.infrastructure.sms.client.SmsClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SmsNotificationChannel implements NotificationChannel {
+    private final SmsClient smsClient;
     private static final Logger log = LoggerFactory.getLogger(SmsNotificationChannel.class);
+
+    public SmsNotificationChannel(SmsClient smsClient) {
+        this.smsClient = smsClient;
+    }
 
     @Override
     public void send(NotificationCommand command) {
@@ -29,6 +35,7 @@ public class SmsNotificationChannel implements NotificationChannel {
         };
 
         log.info("SMS message={}", message);
+        smsClient.send(command.getPhone(), message);
 
     }
 }

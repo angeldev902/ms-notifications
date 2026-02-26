@@ -1,13 +1,11 @@
 package com.ordersystem.ms_notifications.handler;
 
 import com.ordersystem.ms_notifications.domain.CustomerEvent;
-import com.ordersystem.ms_notifications.domain.NotificationService;
-import com.ordersystem.ms_notifications.service.EmailNotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import com.ordersystem.ms_notifications.application.*;
-
+import com.ordersystem.ms_notifications.domain.model.NotificationType;
 
 @Component
 @Slf4j
@@ -22,17 +20,17 @@ public class NotificationEventHandler {
 
         switch (event.getEventType()) {
 
-            case "CUSTOMER_CREATED" -> {
+            case  NotificationType.CUSTOMER_CREATED -> {
                 log.info("Sending welcome notification for customer {}", event.getCustomerId());
                 welcomeUseCase.execute(event.getEmail(), event.getPhone(), event.getName());
             }
 
-            case "CUSTOMER_UPDATED" -> {
+            case NotificationType.CUSTOMER_UPDATED -> {
                     log.info("Sending update notification for customer {}", event.getCustomerId());
-                    updatedUseCase.execute(event.getEmail(), event.getPhone(), event.getName());
+                    updatedUseCase.execute(event.getEmail(), "7722102929", event.getName());
             }
 
-            case "CUSTOMER_DELETED" -> {
+            case NotificationType.CUSTOMER_DELETED -> {
                     log.info("Sending delete notification for customer {}", event.getCustomerId());
                     deletedUseCase.execute(event.getEmail(), event.getPhone(), event.getName());
             }
