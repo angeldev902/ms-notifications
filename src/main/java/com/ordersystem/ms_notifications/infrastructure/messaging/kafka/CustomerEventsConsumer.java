@@ -1,7 +1,7 @@
 package com.ordersystem.ms_notifications.consumer;
 
-import com.ordersystem.ms_notifications.domain.CustomerEvent;
-import com.ordersystem.ms_notifications.handler.NotificationEventHandler;
+import com.ordersystem.ms_notifications.domain.model.CustomerEvent;
+import com.ordersystem.ms_notifications.application.handler.NotificationEventHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

@@ -1,6 +1,6 @@
 package com.ordersystem.ms_notifications.handler;
 
-import com.ordersystem.ms_notifications.domain.CustomerEvent;
+import com.ordersystem.ms_notifications.domain.model.CustomerEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
