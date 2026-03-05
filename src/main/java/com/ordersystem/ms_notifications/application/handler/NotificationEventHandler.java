@@ -1,10 +1,12 @@
-package com.ordersystem.ms_notifications.handler;
+package com.ordersystem.ms_notifications.application.handler;
 
+import com.ordersystem.ms_notifications.application.usecase.SendCustomerDeletedNotificationUseCase;
+import com.ordersystem.ms_notifications.application.usecase.SendCustomerUpdatedNotificationUseCase;
+import com.ordersystem.ms_notifications.application.usecase.SendWelcomeNotificationUseCase;
 import com.ordersystem.ms_notifications.domain.model.CustomerEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import com.ordersystem.ms_notifications.application.*;
 import com.ordersystem.ms_notifications.domain.model.NotificationType;
 
 @Component

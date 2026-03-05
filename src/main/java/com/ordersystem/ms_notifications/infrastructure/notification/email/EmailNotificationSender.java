@@ -1,4 +1,4 @@
-package com.ordersystem.ms_notifications.infrastructure.email;
+package com.ordersystem.ms_notifications.infrastructure.notification.email;
 
 import com.ordersystem.ms_notifications.domain.model.NotificationCommand;
 import com.ordersystem.ms_notifications.domain.port.NotificationChannel;

@@ -1,8 +1,7 @@
-package com.ordersystem.ms_notifications.domain;
+package com.ordersystem.ms_notifications.domain.model;
 
-import com.ordersystem.ms_notifications.domain.model.NotificationType;
 import lombok.Data;
-import java.math.BigDecimal;
+
 import java.time.Instant;
 
 @Data

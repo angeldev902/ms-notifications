@@ -1,8 +1,8 @@
-package com.ordersystem.ms_notifications.infrastructure.sms;
+package com.ordersystem.ms_notifications.infrastructure.notification.sms;
 
 import com.ordersystem.ms_notifications.domain.model.NotificationCommand;
 import com.ordersystem.ms_notifications.domain.port.NotificationChannel;
-import com.ordersystem.ms_notifications.infrastructure.sms.client.SmsClient;
+import com.ordersystem.ms_notifications.infrastructure.notification.sms.client.SmsClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

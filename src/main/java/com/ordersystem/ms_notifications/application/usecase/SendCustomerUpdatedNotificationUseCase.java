@@ -1,18 +1,18 @@
-package com.ordersystem.ms_notifications.application;
+package com.ordersystem.ms_notifications.application.usecase;
 
 import com.ordersystem.ms_notifications.domain.model.NotificationCommand;
 import com.ordersystem.ms_notifications.domain.model.NotificationType;
-import com.ordersystem.ms_notifications.infrastructure.NotificationOrchestrator;
+import com.ordersystem.ms_notifications.domain.port.output.NotificationSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
 public class SendCustomerUpdatedNotificationUseCase {
-    private final NotificationOrchestrator orchestrator;
+    private final NotificationSender notificationSender;
 
-    public SendCustomerUpdatedNotificationUseCase(NotificationOrchestrator orchestrator) {
-        this.orchestrator = orchestrator;
+    public SendCustomerUpdatedNotificationUseCase(NotificationSender notificationSender) {
+        this.notificationSender = notificationSender;
     }
 
     public void execute(String email, String phone, String name) {
@@ -25,6 +25,6 @@ public class SendCustomerUpdatedNotificationUseCase {
                         NotificationType.CUSTOMER_UPDATED
                 );
 
-        orchestrator.notify(command);
+        notificationSender.notify(command);
     }
 }

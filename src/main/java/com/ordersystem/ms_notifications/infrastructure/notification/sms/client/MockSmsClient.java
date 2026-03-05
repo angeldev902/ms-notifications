@@ -1,4 +1,4 @@
-package com.ordersystem.ms_notifications.infrastructure.sms.client;
+package com.ordersystem.ms_notifications.infrastructure.notification.sms.client;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
