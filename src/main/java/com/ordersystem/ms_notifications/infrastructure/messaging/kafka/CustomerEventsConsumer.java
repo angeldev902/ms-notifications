@@ -1,5 +1,6 @@
 package com.ordersystem.ms_notifications.infrastructure.messaging.kafka;
 
+import com.ordersystem.ms_notifications.application.service.IdempotencyService;
 import com.ordersystem.ms_notifications.domain.model.CustomerEvent;
 import com.ordersystem.ms_notifications.application.handler.NotificationEventHandler;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.retrytopic.TopicSuffixingStrategy;
-import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CustomerEventsConsumer {
 
+    private final IdempotencyService idempotencyService;
     private final NotificationEventHandler handler;
 
     @RetryableTopic(
@@ -32,13 +35,40 @@ public class CustomerEventsConsumer {
             topics = "customers.events",
             groupId = "notifications-service"
     )
-    public void consume(CustomerEvent event) {
+    public void consume(
+            CustomerEvent event,
+            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+            @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
+            @Header(KafkaHeaders.OFFSET) long offset
+    ) {
 
-        log.info("Event received from Kafka: {}", event);
+        String eventId = topic + "-" + partition + "-" + offset;
 
-        handler.handle(event);
+        log.info("Processing eventId={}", eventId);
 
-        log.info("Event processed successfully: {}", event.getCustomerId());
+        if (idempotencyService.isProcessed(eventId)) {
+
+            log.warn("Event already processed {}", eventId);
+
+            return;
+        }
+
+        try {
+
+            handler.handle(event);
+
+            idempotencyService.markProcessed(eventId);
+
+        } catch (Exception e) {
+
+            log.error("Error processing event {}", eventId, e);
+
+            throw e;
+        }
+
+
+
+
     }
 
 
